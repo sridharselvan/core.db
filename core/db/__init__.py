@@ -28,6 +28,27 @@ __all__ = [
 ]
 
 
+class DataBaseEntity(object):
+    """."""
+    instances = list()
+
+    def __init__(self, query, desc='', method='DDL'):
+        """."""
+        allowed_methods = ('DDL', )
+        if method not in allowed_methods:
+            raise Exception("Argument method is not one among {}".format(allowed_methods))
+
+        self.query = query
+        self.description = desc
+        self.method = method
+
+        self.__class__.instances.append(self)
+
+    @classmethod
+    def load_all(cls):
+        print instances
+
+
 def create_session():
     """."""
     # application starts

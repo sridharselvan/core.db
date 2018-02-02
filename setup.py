@@ -40,8 +40,8 @@ setup(
     install_requires=[],
 
     entry_points={
-        #'console_scripts': [
-        #    'sample=sample:main',
-        #],
+        'console_scripts': [
+            'initdb=core.db.load_schema:main',
+        ],
     },
 )

@@ -32,21 +32,28 @@ class DataBaseEntity(object):
     """."""
     instances = list()
 
-    def __init__(self, query, desc='', method='DDL'):
+    def __init__(self, query, pre_query='', desc=''):
         """."""
-        allowed_methods = ('DDL', )
-        if method not in allowed_methods:
-            raise Exception("Argument method is not one among {}".format(allowed_methods))
 
         self.query = query
+        self.pre_query = pre_query or None
         self.description = desc
-        self.method = method
 
         self.__class__.instances.append(self)
 
     @classmethod
     def load_all(cls):
-        print instances
+        import sqlite3 as sqlite
+        connection = sqlite.connect('db.sqlite')
+
+        cursor = connection.cursor()
+
+        for each in cls.instances:
+            if each.pre_query:
+                cursor.execute(each.pre_query)
+            cursor.execute(each.query)
+
+        connection.commit()
 
 
 def create_session():
@@ -62,7 +69,7 @@ def create_session():
     #ss = c.execute('''select * from user''')
 
     # ... later
-    engine = create_engine('sqlite:///example.db')
+    engine = create_engine('sqlite:///db.sqlite')
     Session.configure(bind=engine)
 
     session = Session()

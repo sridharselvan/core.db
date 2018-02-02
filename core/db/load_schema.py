@@ -28,7 +28,7 @@ __all__ = [
 db_type = 'sqlite'
 
 if db_type == 'sqlite':
-    from core.db.schema import sqlite.py
+    from core.db.schema import sqlite
 
 def main():
     DataBaseEntity.load_all()

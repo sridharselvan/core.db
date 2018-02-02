@@ -41,7 +41,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'initdb=core.db.load_schema:main',
+            'db.init=core.db.load_schema:main',
         ],
     },
 )

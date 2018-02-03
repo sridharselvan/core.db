@@ -99,6 +99,7 @@ DataBaseEntity(
         '''"browser_version" VARCHAR,'''
         '''"attempted_on" DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP,'''
         '''"status_idn" INTEGER NOT NULL,'''
+        '''"is_active" INTEGER DEFAULT 1'''
         '''"unique_session_cd" VARCHAR DEFAULT (null),'''
         '''    FOREIGN KEY(user_idn) REFERENCES user(user_idn),'''
         '''    FOREIGN KEY(status_idn) REFERENCES code_status(status_idn))'''

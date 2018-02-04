@@ -88,7 +88,7 @@ def generate_client_config():
     out_config = CLIENT_CONFIG_FILE
 
     # Check for instruction pattterns e.g., ${call:generate_valve_nodes}$
-    pattern = re.compile("""\$\{(.*?)\}\$""")
+    pattern = re.compile("""\{\{(.*?)\}\}""")
 
     for each_section in populate:
         if not cparser.has_section(each_section):

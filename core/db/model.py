@@ -71,12 +71,12 @@ class UserSessionModel(SqlAlchemyORM):
         if 'is_active' not in kwargs:
             kwargs['is_active'] = 1
 
-        if 'user_name' in kwargs:
+        if 'user_idn' in kwargs:
             kwargs['join_tables'].append(
                 cls.join_construct(
                     table_model=UserModel,
                     join_on='default',
-                    where_condition={'user_name': kwargs.pop('user_name')}
+                    where_condition={'user_idn': kwargs.pop('user_idn')}
                 )
             )
 

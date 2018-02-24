@@ -34,25 +34,28 @@ DataBaseEntity(
     desc='''pre condition'''
 )
 
-
 DataBaseEntity(
     query=(
-        '''CREATE TABLE IF NOT EXISTS user ('''
-        '''user_idn INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'''
-        '''first_name varchar(25) NOT NULL,'''
-        '''last_name varchar(25),'''
-        '''user_name varchar(25) NOT NULL,'''
-        '''hash1 VARCHAR(64) NOT NULL,'''
-        '''hash2 VARCHAR(64),'''
-        '''phone_no1 number NOT NULL,'''
-        '''phone_no2 number,'''
-        '''email_id varchar(50),'''
-        '''crt_dt DATETIME,'''
-        '''upd_dt DATETIME,'''
-        '''is_active number(1) DEFAULT 1)'''
+        '''CREATE  TABLE  IF NOT EXISTS "main"."code_schedule_type" ('''
+        '''schedule_type_idn INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,'''
+        '''schedule_type VARCHAR NOT NULL ,'''
+        '''crt_dt DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP,'''
+        '''upd_dt DATETIME NOT NULL)'''
     ),
-    desc='''Create User table''',
-    pre_query='''DROP TABLE IF EXISTS USER'''
+    desc='''Create code_schedule_type table''',
+    pre_query='''DROP TABLE IF EXISTS CODE_SCHEDULE_TYPE'''
+)
+
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_schedule_type" ("schedule_type","crt_dt","upd_dt") VALUES ('One Time',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+)
+
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_schedule_type" ("schedule_type","crt_dt","upd_dt") VALUES ('Daily',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+)
+
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_schedule_type" ("schedule_type","crt_dt","upd_dt") VALUES ('Weekly',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
 )
 
 
@@ -86,6 +89,39 @@ DataBaseEntity(
 )
 DataBaseEntity(
     query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('timedout',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+)
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('initiated',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+)
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('inprocess',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+)
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('completed',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+)
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('skipped',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+)
+
+
+DataBaseEntity(
+    query=(
+        '''CREATE TABLE IF NOT EXISTS user ('''
+        '''user_idn INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'''
+        '''first_name varchar(25) NOT NULL,'''
+        '''last_name varchar(25),'''
+        '''user_name varchar(25) NOT NULL,'''
+        '''hash1 VARCHAR(64) NOT NULL,'''
+        '''hash2 VARCHAR(64),'''
+        '''phone_no1 number NOT NULL,'''
+        '''phone_no2 number,'''
+        '''email_id varchar(50),'''
+        '''crt_dt DATETIME,'''
+        '''upd_dt DATETIME,'''
+        '''is_active number(1) DEFAULT 1)'''
+    ),
+    desc='''Create User table''',
+    pre_query='''DROP TABLE IF EXISTS USER'''
 )
 
 
@@ -124,3 +160,46 @@ DataBaseEntity(
     desc='''Create user_activity table''',
     pre_query='''DROP TABLE IF EXISTS USER_ACTIVITY'''
 )
+
+
+DataBaseEntity(
+    query=(
+        '''    CREATE  TABLE  IF NOT EXISTS "main"."job_details" '''
+        '''    (job_details_idn INTEGER PRIMARY KEY  NOT NULL  UNIQUE , '''
+        '''    job_id VARCHAR NOT NULL , '''
+        '''    schedule_type_idn INTEGER NOT NULL, '''
+        '''    start_date DATETIME NOT NULL , '''
+        '''    recurrence INTEGER, '''
+        '''    day_of_week VARCHAR, '''
+        '''    params VARCHAR, '''
+        '''    is_active INTEGER NOT NULL DEFAULT 1, '''
+        '''    user_idn INTEGER NOT NULL , '''
+        '''    crt_dt DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP, '''
+        '''    upd_dt DATETIME DEFAULT CURRENT_TIMESTAMP, '''
+        '''        FOREIGN KEY(user_idn) REFERENCES user(user_idn), '''
+        '''        FOREIGN KEY(schedule_type_idn) REFERENCES code_schedule_type(schedule_type_idn)) '''
+    ),
+    desc='''Create job_details table''',
+    pre_query='''DROP TABLE IF EXISTS JOB_DETAILS'''
+)
+
+
+DataBaseEntity(
+    query=(
+        '''CREATE  TABLE  IF NOT EXISTS "main"."job_run_log" '''
+        '''(job_run_log_idn INTEGER PRIMARY KEY  NOT NULL  UNIQUE , '''
+        '''job_id VARCHAR NOT NULL , '''
+        '''status_idn INTEGER NOT NULL ,''' 
+        '''message VARCHAR, '''
+        '''error_trace VARCHAR,''' 
+        '''crt_dt DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP, '''
+        '''upd_dt DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP,'''
+        '''    FOREIGN KEY(job_id) REFERENCES job_details(job_id),'''
+        '''    FOREIGN KEY(status_idn) REFERENCES code_status(status_idn))'''
+    ),
+    desc='''Create job_run_log table''',
+    pre_query='''DROP TABLE IF EXISTS JOB_RUN_LOG'''
+)
+
+
+

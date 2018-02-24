@@ -71,7 +71,7 @@ class UserSessionEntity(Base):
     unique_session_cd = Column(String, nullable=True)
     is_active = Column(Integer, nullable=False, default=1)
 
-    user_name = relationship('UserEntity')
+    #user_name = relationship('UserEntity')
 
 class UserActivityEntity(Base):
     __tablename__ = 'user_activity'
@@ -81,5 +81,40 @@ class UserActivityEntity(Base):
     crt_dt = Column(DateTime, default=datetime.datetime.utcnow) 
     status_idn = Column(Integer, ForeignKey('code_status.status_idn')) 
     user_session_idn = Column(Integer, ForeignKey('user_session.user_session_idn'))
+
+class CodeScheduleTypeEntity(Base):
+    __tablename__ = 'code_schedule_type'
+
+    schedule_type_idn = Column(Integer, primary_key=True)
+    schedule_type = Column(String, nullable=False) 
+    crt_dt = Column(DateTime, default=datetime.datetime.utcnow)
+    upd_dt = Column(DateTime, default=datetime.datetime.utcnow)
+
+class JobDetailsEntity(Base):
+    __tablename__ = 'job_details'
+
+    job_details_idn = Column(Integer, primary_key=True)
+    job_id = Column(String, nullable=False)
+    schedule_type_idn = Column(Integer, ForeignKey('code_schedule_type.schedule_type_idn'))
+    start_date = Column(DateTime, default=datetime.datetime.utcnow)
+    recurrence = Column(Integer, nullable=True)
+    day_of_week = Column(String, nullable=True)
+    params = Column(String, nullable=True)
+    is_active = Column(Integer, nullable=False, default=1)
+    user_idn = Column(Integer, ForeignKey('user.user_idn'))
+    crt_dt = Column(DateTime, default=datetime.datetime.utcnow)
+    upd_dt = Column(DateTime, default=datetime.datetime.utcnow)
+
+class JobRunLogEntity(Base):
+    __tablename__ = 'job_run_log'
+
+    job_run_log_idn = Column(Integer, primary_key=True)
+    job_id = Column(Integer, ForeignKey('job_details.job_id'))
+    status_idn = Column(Integer, ForeignKey('code_status.status_idn'))
+    message = Column(String, nullable=True)
+    error_trace = Column(String, nullable=True)
+    crt_dt = Column(DateTime, default=datetime.datetime.utcnow)
+    upd_dt = Column(DateTime, default=datetime.datetime.utcnow)
+    
 
 

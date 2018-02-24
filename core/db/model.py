@@ -19,7 +19,8 @@
 # ----------- START: In-App Imports ---------- #
 from core.db.saorm import SqlAlchemyORM
 from core.db.entity import (
-    UserEntity, UserSessionEntity, CodeStatusEntity, UserActivityEntity
+    UserEntity, UserSessionEntity, CodeStatusEntity, UserActivityEntity,
+    CodeScheduleTypeEntity, JobDetailsEntity
 )
 # ----------- END: In-App Imports ---------- #
 
@@ -55,6 +56,13 @@ class CodeStatusModel(SqlAlchemyORM):
 
     @classmethod
     def fetch_status_idn(cls, session, **kwargs):
+        return cls.fetch_one(session, **kwargs)
+
+class CodeScheduleTypeModel(SqlAlchemyORM):
+    table = CodeScheduleTypeEntity
+
+    @classmethod
+    def fetch_schedule_type_idn(cls, session, **kwargs):
         return cls.fetch_one(session, **kwargs)
 
 class UserSessionModel(SqlAlchemyORM):
@@ -103,6 +111,13 @@ class UserActivityModel(SqlAlchemyORM):
 
     @classmethod
     def create_user_activity(cls, session, **kwargs):
+        return cls.insert(session, **kwargs)
+
+class JobDetailsModel(SqlAlchemyORM):
+    table = JobDetailsEntity
+
+    @classmethod
+    def save_schedule_config(cls, session, **kwargs):
         return cls.insert(session, **kwargs)
 
 

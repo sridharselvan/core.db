@@ -47,7 +47,7 @@ DataBaseEntity(
 )
 
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_schedule_type" ("schedule_type","crt_dt","upd_dt") VALUES ('One Time',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_schedule_type" ("schedule_type","crt_dt","upd_dt") VALUES ('OneTime',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
 )
 
 DataBaseEntity(

@@ -61,9 +61,6 @@ class CodeStatusModel(SqlAlchemyORM):
 class CodeScheduleTypeModel(SqlAlchemyORM):
     table = CodeScheduleTypeEntity
 
-    @classmethod
-    def fetch_schedule_type_idn(cls, session, **kwargs):
-        return cls.fetch_one(session, **kwargs)
 
 class UserSessionModel(SqlAlchemyORM):
     table = UserSessionEntity
@@ -116,8 +113,5 @@ class UserActivityModel(SqlAlchemyORM):
 class JobDetailsModel(SqlAlchemyORM):
     table = JobDetailsEntity
 
-    @classmethod
-    def save_schedule_config(cls, session, **kwargs):
-        return cls.insert(session, **kwargs)
 
 

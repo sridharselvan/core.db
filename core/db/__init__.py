@@ -58,21 +58,8 @@ class DataBaseEntity(object):
 
 def create_session():
     """."""
-    # application starts
+
     Session = sessionmaker()
-    conn = sqlite3.connect('example.db')
+    Session.configure(bind=create_engine('sqlite:///db.sqlite'))
 
-    #c = conn.cursor()
-    # Create table
-    #c.execute('''CREATE TABLE user (id number, username text, password text)''')
-    #c.execute('''insert into user (id, username, password) values (1, 'admin', 'admin')''')
-    #ss = c.execute('''select * from user''')
-
-    # ... later
-    engine = create_engine('sqlite:///db.sqlite')
-    Session.configure(bind=engine)
-
-    session = Session()
-
-    #session.execute('''insert into user (id, user, passwd) values (1, 'siva', 'sri')''')
-    return session
+    return Session()

@@ -113,5 +113,7 @@ class UserActivityModel(SqlAlchemyORM):
 class JobDetailsModel(SqlAlchemyORM):
     table = JobDetailsEntity
 
+        
+
 
 

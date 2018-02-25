@@ -3,6 +3,7 @@
 
 # ----------- START: Native Imports ---------- #
 from decimal import Decimal
+from datetime import datetime
 from collections import namedtuple
 # ----------- END: Native Imports ---------- #
 
@@ -409,12 +410,18 @@ class SqlAlchemyORM(object):
         Returns:
             dict: dictionary having fields-values mapping
         """
+        def serializable(value):
+            if isinstance(value, Decimal):
+                value = int(value)
+
+            if isinstance(value, datetime):
+                value = value.strftime('%Y-%m-%d %H:%M:%S')            
+            return value
+
         def _adjust(f_name):
             _attr = getattr(result_obj, f_name, None)
 
-            if isinstance(_attr, Decimal):
-                return int(_attr)
-            return _attr
+            return serializable(_attr)
 
         if hasattr(result_obj, '__table__'):
             return {
@@ -426,7 +433,9 @@ class SqlAlchemyORM(object):
             # cols = query_obj.column_descriptions
             # return { cols[i]['name'] : result_obj[i]  for i in range(len(cols)) }
             #
-            return result_obj._asdict()
+            result_as_dict = result_obj._asdict()
+
+            return {key: serializable(value) for key, value in result_as_dict.items()}
 
     @classmethod
     def update(cls, session, updates, where_condition):

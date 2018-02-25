@@ -60,6 +60,6 @@ def create_session():
     """."""
 
     Session = sessionmaker()
-    Session.configure(bind=create_engine('sqlite:///db.sqlite'))
+    Session.configure(bind=create_engine('sqlite:///db.sqlite', echo=True))
 
     return Session()

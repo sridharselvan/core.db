@@ -81,6 +81,7 @@ class UserSessionModel(SqlAlchemyORM):
 
     @classmethod
     def fetch_active_loggedin_user_session(cls, session, mode='all', select_cols="*", data_as_dict=False, **kwargs):
+
         kwargs.update({'join_tables':list()})
 
         if 'is_active' not in kwargs:
@@ -113,7 +114,39 @@ class UserActivityModel(SqlAlchemyORM):
 class JobDetailsModel(SqlAlchemyORM):
     table = JobDetailsEntity
 
-        
+    @classmethod
+    def scheduled_jobs(cls, session, mode='all', select_cols="*", data_as_dict=False, **kwargs):
 
+        kwargs.update({'join_tables':list()})        
+
+        if 'schedule_type' in kwargs:
+
+            _s_t = kwargs.pop('schedule_type')
+            _schedule_type = ('not in', _s_t) if _s_t.lower() == 'select one' else _s_t
+
+            kwargs['join_tables'].append(
+                cls.join_construct(
+                    table_model=CodeScheduleTypeModel,
+                    join_on='default',
+                    where_condition={'schedule_type': _schedule_type}
+                )
+            )
+
+        kwargs['join_tables'].append(
+            cls.join_construct(
+                table_model=UserModel,
+                join_on='default'
+            )
+        )
+
+        columns = cls.table.__table__.columns.keys()
+        select_cols = [getattr(cls.table, column_name) for column_name in columns] + [
+            UserModel.table.user_name,
+            CodeScheduleTypeModel.table.schedule_type
+        ]
+
+        return super(cls, cls).fetch(
+            session, mode=mode, select_cols=select_cols, data_as_dict=data_as_dict, **kwargs
+        )
 
 

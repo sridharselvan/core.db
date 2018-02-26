@@ -117,7 +117,10 @@ class JobDetailsModel(SqlAlchemyORM):
     @classmethod
     def scheduled_jobs(cls, session, mode='all', select_cols="*", data_as_dict=False, **kwargs):
 
-        kwargs.update({'join_tables':list()})        
+        kwargs.update({'join_tables':list()})
+
+        if 'is_active' not in kwargs:
+            kwargs['is_active'] = 1      
 
         if 'schedule_type' in kwargs:
 
@@ -147,6 +150,16 @@ class JobDetailsModel(SqlAlchemyORM):
 
         return super(cls, cls).fetch(
             session, mode=mode, select_cols=select_cols, data_as_dict=data_as_dict, **kwargs
+        )
+
+
+    @classmethod
+    def deactivate_jobs(cls, session, job_details_idn):
+
+        return cls.update(
+            session,
+            updates={'is_active': 0},
+            where_condition={'job_details_idn': job_details_idn}
         )
 
 

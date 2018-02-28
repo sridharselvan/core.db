@@ -25,8 +25,8 @@ __all__ = [
 ]
 
 
-conn = sqlite.connect(r"db.sqlite")
-conn.close()
+#conn = sqlite.connect(r"db.sqlite")
+#conn.close()
 
 
 DataBaseEntity(

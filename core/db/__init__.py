@@ -21,11 +21,15 @@ from sqlalchemy.orm.session import sessionmaker
 # ----------- END: Third Party Imports ---------- #
 
 # ----------- START: In-App Imports ---------- #
+from core.utils.environ import get_main_db_details
 # ----------- END: In-App Imports ---------- #
 
 __all__ = [
     # All public symbols go here.
 ]
+
+
+main_db_details = get_main_db_details()
 
 
 class DataBaseEntity(object):
@@ -44,7 +48,7 @@ class DataBaseEntity(object):
     @classmethod
     def load_all(cls):
         import sqlite3 as sqlite
-        connection = sqlite.connect('db.sqlite')
+        connection = sqlite.connect(main_db_details['path'])
 
         cursor = connection.cursor()
 
@@ -60,6 +64,8 @@ def create_session():
     """."""
 
     Session = sessionmaker()
-    Session.configure(bind=create_engine('sqlite:///db.sqlite', echo=True))
+
+    engine = create_engine('sqlite:///{}'.format(main_db_details['path']))
+    Session.configure(bind=engine)
 
     return Session()

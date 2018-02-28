@@ -163,3 +163,13 @@ class JobDetailsModel(SqlAlchemyORM):
         )
 
 
+    @classmethod
+    def update_jobs(cls, session, job_details_idn, **kwargs):
+
+        return cls.update(
+            session,
+            updates=kwargs,
+            where_condition={'job_details_idn': job_details_idn}
+        )
+
+

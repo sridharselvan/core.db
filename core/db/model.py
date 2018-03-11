@@ -120,7 +120,7 @@ class JobDetailsModel(SqlAlchemyORM):
         kwargs.update({'join_tables':list()})
 
         if 'is_active' not in kwargs:
-            kwargs['is_active'] = 1      
+            kwargs['is_active'] = 1
 
         if 'schedule_type' in kwargs:
 

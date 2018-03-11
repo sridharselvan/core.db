@@ -54,8 +54,21 @@ class DataBaseEntity(object):
 
         for each in cls.instances:
             if each.pre_query:
-                cursor.execute(each.pre_query)
-            cursor.execute(each.query)
+                print 'performing PRE-PROCESS for {}... '.format(each.description or '<NO DESC>'),
+                try:
+                    cursor.execute(each.pre_query)
+                except:
+                    print 'FAILURE'
+                else:
+                    print 'SUCCESS'
+
+            print 'performing PROCESS for {}... '.format(each.description or '<NO DESC>'),
+            try:
+                cursor.execute(each.query)
+            except:
+                print 'FAILURE'
+            else:
+                print 'SUCCESS'
 
         connection.commit()
 

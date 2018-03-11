@@ -47,15 +47,18 @@ DataBaseEntity(
 )
 
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_schedule_type" ("schedule_type","crt_dt","upd_dt") VALUES ('OneTime',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_schedule_type" ("schedule_type","crt_dt","upd_dt") VALUES ('OneTime',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_schedule_type table'''
 )
 
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_schedule_type" ("schedule_type","crt_dt","upd_dt") VALUES ('Daily',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_schedule_type" ("schedule_type","crt_dt","upd_dt") VALUES ('Daily',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_schedule_type table'''
 )
 
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_schedule_type" ("schedule_type","crt_dt","upd_dt") VALUES ('Weekly',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_schedule_type" ("schedule_type","crt_dt","upd_dt") VALUES ('Weekly',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_schedule_type table'''
 )
 
 
@@ -73,34 +76,44 @@ DataBaseEntity(
 
 
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('success',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('success',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_status table'''
 )
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('failure',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('failure',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_status table'''
 )
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('error',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('error',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_status table'''
 )
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('loggedin',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('loggedin',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_status table'''
 )
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('loggedout',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('loggedout',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_status table'''
 )
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('timedout',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('timedout',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_status table'''
 )
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('initiated',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('initiated',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_status table'''
 )
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('inprocess',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('inprocess',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_status table'''
 )
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('completed',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('completed',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_status table'''
 )
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('skipped',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);'''
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('skipped',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_status table'''
 )
 
 

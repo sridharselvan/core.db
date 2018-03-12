@@ -154,12 +154,12 @@ class JobDetailsModel(SqlAlchemyORM):
 
 
     @classmethod
-    def deactivate_jobs(cls, session, job_details_idn):
+    def deactivate_jobs(cls, session, **kwargs):
 
         return cls.update(
             session,
             updates={'is_active': 0},
-            where_condition={'job_details_idn': job_details_idn}
+            where_condition=kwargs
         )
 
 

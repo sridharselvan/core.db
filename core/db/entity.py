@@ -100,6 +100,7 @@ class JobDetailsEntity(Base):
     recurrence = Column(String, nullable=True)
     day_of_week = Column(String, nullable=True)
     params = Column(String, nullable=True)
+    next_run_time = Column(String, nullable=True)
     is_active = Column(Integer, nullable=False, default=1)
     user_idn = Column(Integer, ForeignKey('user.user_idn'))
     crt_dt = Column(DateTime, default=datetime.datetime.utcnow)

@@ -185,6 +185,7 @@ DataBaseEntity(
         '''    recurrence VARCHAR, '''
         '''    day_of_week VARCHAR, '''
         '''    params VARCHAR, '''
+        '''    next_run_time VARCHAR, '''
         '''    is_active INTEGER NOT NULL DEFAULT 1, '''
         '''    user_idn INTEGER NOT NULL , '''
         '''    crt_dt DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP, '''

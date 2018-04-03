@@ -112,7 +112,7 @@ DataBaseEntity(
     desc='''Data Load for code_status table'''
 )
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('skipped',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('missed',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
     desc='''Data Load for code_status table'''
 )
 

@@ -20,7 +20,7 @@
 from core.db.saorm import SqlAlchemyORM
 from core.db.entity import (
     UserEntity, UserSessionEntity, CodeStatusEntity, UserActivityEntity,
-    CodeScheduleTypeEntity, JobDetailsEntity
+    CodeScheduleTypeEntity, JobDetailsEntity, JobRunLogEntity
 )
 # ----------- END: In-App Imports ---------- #
 
@@ -162,14 +162,23 @@ class JobDetailsModel(SqlAlchemyORM):
             where_condition=kwargs
         )
 
-
     @classmethod
-    def update_jobs(cls, session, job_details_idn, **kwargs):
+    def update_jobs(cls, session, where_condition=None, updates=None):
+
+        _where = where_condition or dict()
+        _updates = updates or dict()
 
         return cls.update(
             session,
-            updates=kwargs,
-            where_condition={'job_details_idn': job_details_idn}
+            updates=_updates,
+            where_condition=_where
         )
+
+class JobRunLogModel(SqlAlchemyORM):
+    table = JobRunLogEntity
+
+    @classmethod
+    def create_run_log(cls, session, **kwargs):
+        return cls.insert(session, **kwargs)
 
 

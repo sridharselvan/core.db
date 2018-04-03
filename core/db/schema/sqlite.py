@@ -112,7 +112,7 @@ DataBaseEntity(
     desc='''Data Load for code_status table'''
 )
 DataBaseEntity(
-    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('skipped',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('missed',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
     desc='''Data Load for code_status table'''
 )
 
@@ -185,6 +185,7 @@ DataBaseEntity(
         '''    recurrence VARCHAR, '''
         '''    day_of_week VARCHAR, '''
         '''    params VARCHAR, '''
+        '''    next_run_time VARCHAR, '''
         '''    is_active INTEGER NOT NULL DEFAULT 1, '''
         '''    user_idn INTEGER NOT NULL , '''
         '''    crt_dt DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP, '''

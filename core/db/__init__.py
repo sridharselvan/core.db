@@ -43,8 +43,20 @@ def create_session():
 
     Session = sessionmaker()
 
-    #engine = create_engine('sqlite:///{}'.format(main_db_details['path']))
-    engine = create_engine('mysql+pymysql://root:SivaCnSugi@123@localhost:3306/siva')
+    if DB_TYPE == 'sqlite':
+        engine = create_engine('sqlite:///{}'.format(main_db_details['path']))
+
+    elif DB_TYPE == 'mysql':
+        engine = create_engine(
+            'mysql+pymysql://{}:{}@{}:{}/{}'.format(
+                main_db_details['username'],
+                main_db_details['password'],
+                main_db_details['host'],
+                main_db_details['port'],
+                main_db_details['name']
+            )
+        )
+
     Session.configure(bind=engine)
 
     return Session()
@@ -112,7 +124,7 @@ class DataBaseEntity(object):
                     query = Template(each.pre_query).safe_substitute(MYSQL_SUBSTITUTE)
                     query = Template(query).safe_substitute(each.params)
 
-                    print 'performing {}... '.format(_desc),
+                    print '{}... '.format(_desc),
                     try:
                         cursor.execute(query)
                     except Exception as error:
@@ -122,7 +134,7 @@ class DataBaseEntity(object):
                         print 'SUCCESS'
                         db.commit()
 
-                print 'performing {}... '.format(_desc),
+                print '{}... '.format(_desc),
                 try:
                     query = Template(each.query).safe_substitute(MYSQL_SUBSTITUTE)
                     query = Template(query).safe_substitute(each.params)

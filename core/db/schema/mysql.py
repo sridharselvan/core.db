@@ -61,19 +61,19 @@ DataBaseEntity(
 DataBaseEntity(
     query=('''INSERT INTO CODE_SCHEDULE_TYPE (SCHEDULE_TYPE, CRT_DT, UPD_DT) '''
            '''VALUES ('OneTime',$cur_timestamp,$cur_timestamp)'''),
-    desc='''Data Load for CODE_SCHEDULE_TYPE table'''
+    desc='''--> Data Load for CODE_SCHEDULE_TYPE table'''
 )
 
 DataBaseEntity(
     query=('''INSERT INTO CODE_SCHEDULE_TYPE (SCHEDULE_TYPE, CRT_DT, UPD_DT) '''
            '''VALUES ('Daily',$cur_timestamp,$cur_timestamp)'''),
-    desc='''Data Load for CODE_SCHEDULE_TYPE table'''
+    desc='''--> Data Load for CODE_SCHEDULE_TYPE table'''
 )
 
 DataBaseEntity(
     query=('''INSERT INTO CODE_SCHEDULE_TYPE (SCHEDULE_TYPE, CRT_DT, UPD_DT) '''
            '''VALUES ('Weekly',$cur_timestamp,$cur_timestamp)'''),
-    desc='''Data Load for CODE_SCHEDULE_TYPE table'''
+    desc='''--> Data Load for CODE_SCHEDULE_TYPE table'''
 )
 
 
@@ -96,43 +96,43 @@ DataBaseEntity(
 
 DataBaseEntity(
     query='''INSERT INTO CODE_STATUS (STATUS,CRT_DT,UPD_DT) VALUES ('success',$cur_timestamp,$cur_timestamp)''',
-    desc='''Data Load for CODE_STATUS table'''
+    desc='''--> Data Load for CODE_STATUS table'''
 )
 DataBaseEntity(
     query='''INSERT INTO CODE_STATUS (STATUS,CRT_DT,UPD_DT) VALUES ('failure',$cur_timestamp,$cur_timestamp)''',
-    desc='''Data Load for CODE_STATUS table'''
+    desc='''--> Data Load for CODE_STATUS table'''
 )
 DataBaseEntity(
     query='''INSERT INTO CODE_STATUS (STATUS,CRT_DT,UPD_DT) VALUES ('error',$cur_timestamp,$cur_timestamp)''',
-    desc='''Data Load for CODE_STATUS table'''
+    desc='''--> Data Load for CODE_STATUS table'''
 )
 DataBaseEntity(
     query='''INSERT INTO CODE_STATUS (STATUS,CRT_DT,UPD_DT) VALUES ('loggedin',$cur_timestamp,$cur_timestamp)''',
-    desc='''Data Load for CODE_STATUS table'''
+    desc='''--> Data Load for CODE_STATUS table'''
 )
 DataBaseEntity(
     query='''INSERT INTO CODE_STATUS (STATUS,CRT_DT,UPD_DT) VALUES ('loggedout',$cur_timestamp,$cur_timestamp)''',
-    desc='''Data Load for CODE_STATUS table'''
+    desc='''--> Data Load for CODE_STATUS table'''
 )
 DataBaseEntity(
     query='''INSERT INTO CODE_STATUS (STATUS,CRT_DT,UPD_DT) VALUES ('timedout',$cur_timestamp,$cur_timestamp)''',
-    desc='''Data Load for CODE_STATUS table'''
+    desc='''--> Data Load for CODE_STATUS table'''
 )
 DataBaseEntity(
     query='''INSERT INTO CODE_STATUS (STATUS,CRT_DT,UPD_DT) VALUES ('initiated',$cur_timestamp,$cur_timestamp)''',
-    desc='''Data Load for CODE_STATUS table'''
+    desc='''--> Data Load for CODE_STATUS table'''
 )
 DataBaseEntity(
     query='''INSERT INTO CODE_STATUS (STATUS,CRT_DT,UPD_DT) VALUES ('inprocess',$cur_timestamp,$cur_timestamp)''',
-    desc='''Data Load for CODE_STATUS table'''
+    desc='''--> Data Load for CODE_STATUS table'''
 )
 DataBaseEntity(
     query='''INSERT INTO CODE_STATUS (STATUS,CRT_DT,UPD_DT) VALUES ('completed',$cur_timestamp,$cur_timestamp)''',
-    desc='''Data Load for CODE_STATUS table'''
+    desc='''--> Data Load for CODE_STATUS table'''
 )
 DataBaseEntity(
     query='''INSERT INTO CODE_STATUS (STATUS,CRT_DT,UPD_DT) VALUES ('missed',$cur_timestamp,$cur_timestamp)''',
-    desc='''Data Load for CODE_STATUS table'''
+    desc='''--> Data Load for CODE_STATUS table'''
 )
 
 
@@ -159,6 +159,13 @@ DataBaseEntity(
         'tablename': 'USER'
     }
 )
+
+
+DataBaseEntity(
+    query='''INSERT INTO USER (FIRST_NAME, LAST_NAME, USER_NAME, HASH1, PHONE_NO1) VALUES ('a','a','YQ==', 'YQ==', 1)''',
+    desc='''--> User a created CODE_STATUS table'''
+)
+
 
 DataBaseEntity(
     query=(
@@ -209,11 +216,11 @@ DataBaseEntity(
     query=(
         '''CREATE TABLE $tablename'''
         '''('''
-        '''    JOB_DETAILS_IDN $type_integer $primary_key $not_null $uniq, '''
+        '''    JOB_DETAILS_IDN $type_integer $primary_key $auto_increment $not_null $uniq, '''
         '''    JOB_ID $type_string(50) $not_null, '''
         '''    SCHEDULE_TYPE_IDN $type_integer $not_null, '''
         '''    START_DATE $type_timestamp $not_null, '''
-        '''    RECURRENCE $type_string(25), '''
+        '''    RECURRENCE $type_string(200), '''
         '''    DAY_OF_WEEK $type_string(25), '''
         '''    PARAMS $type_string(100), '''
         '''    NEXT_RUN_TIME $type_string(25), '''
@@ -236,7 +243,7 @@ DataBaseEntity(
     query=(
         '''CREATE TABLE $tablename'''
         '''('''
-        '''    JOB_RUN_LOG_IDN $type_integer $primary_key $not_null $uniq, '''
+        '''    JOB_RUN_LOG_IDN $type_integer $primary_key $auto_increment $not_null $uniq, '''
         '''    JOB_ID $type_string(50) $not_null, '''
         '''    STATUS_IDN $type_integer $not_null, '''
         '''    MESSAGE $type_string(500), '''

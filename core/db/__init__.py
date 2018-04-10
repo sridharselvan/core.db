@@ -34,7 +34,8 @@ __all__ = [
 
 main_db_details = get_main_db_details()
 
-DATABASE_NAME = 'siva'
+DB_TYPE = main_db_details['type']
+DATABASE_NAME = main_db_details['name']
 
 
 def create_session():
@@ -64,10 +65,9 @@ class DataBaseEntity(object):
         self.__class__.instances.append(self)
 
     @classmethod
-    def load_all(cls):
-        db_type = 'mysql'
+    def load_all(cls, DB_TYPE='primary_db'):
 
-        if db_type == 'sqlite':
+        if DB_TYPE == 'sqlite':
             import sqlite3 as sqlite
             connection = sqlite.connect(main_db_details['path'])
 
@@ -75,7 +75,7 @@ class DataBaseEntity(object):
 
             for each in cls.instances:
                 if each.pre_query:
-                    print 'performing PRE-PROCESS for {}... '.format(each.description or '<NO DESC>'),
+                    print 'performing PRE-PROCESS for {}... '.format(each.description),
                     try:
                         cursor.execute(each.pre_query)
                     except:
@@ -83,7 +83,7 @@ class DataBaseEntity(object):
                     else:
                         print 'SUCCESS'
 
-                print 'performing PROCESS for {}... '.format(each.description or '<NO DESC>'),
+                print 'performing PROCESS for {}... '.format(each.description),
                 try:
                     cursor.execute(each.query)
                 except:
@@ -93,19 +93,20 @@ class DataBaseEntity(object):
 
             connection.commit()
 
-        if db_type == 'mysql':
+        if DB_TYPE == 'mysql':
 
             from core.db.schema.mysql import MYSQL_SUBSTITUTE
 
             db = pymysql.connect("localhost","root","SivaCnSugi@123")
 
             cursor = db.cursor()
-            cursor.execute('DROP DATABASE {}'.format(DATABASE_NAME))
+
+            cursor.execute('DROP DATABASE IF EXISTS {}'.format(DATABASE_NAME))
             cursor.execute('CREATE DATABASE {}'.format(DATABASE_NAME))
             cursor.execute('USE {}'.format(DATABASE_NAME))
 
             for each in cls.instances:
-                _desc = Template(each.description).safe_substitute(each.params) if each.description else '<NO DESC>'
+                _desc = Template(each.description).safe_substitute(each.params) if each.description else ''
                 if each.pre_query:
 
                     query = Template(each.pre_query).safe_substitute(MYSQL_SUBSTITUTE)
@@ -135,3 +136,16 @@ class DataBaseEntity(object):
                     print 'SUCCESS'
                     db.commit()
 
+
+def main():
+
+    if DB_TYPE == 'sqlite':
+        from core.db.schema import sqlite
+
+    elif DB_TYPE == 'mysql':
+        from core.db.schema import mysql
+
+    else:
+        raise Exception('Invalid Database Type: {}'.format(DB_TYPE))
+
+    DataBaseEntity.load_all(DB_TYPE)

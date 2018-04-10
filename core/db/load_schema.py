@@ -25,10 +25,13 @@ __all__ = [
 ]
 
 
-db_type = 'sqlite'
+db_type = 'mysql'
 
 if db_type == 'sqlite':
     from core.db.schema import sqlite
+
+if db_type == 'mysql':
+    from core.db.schema import mysql
 
 def main():
     DataBaseEntity.load_all()

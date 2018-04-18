@@ -150,6 +150,8 @@ DataBaseEntity(
         '''"status_idn" INTEGER NOT NULL,'''
         '''"is_active" INTEGER DEFAULT 1,'''
         '''"unique_session_cd" VARCHAR DEFAULT (null),'''
+        '''crt_dt DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP, '''
+        '''upd_dt DATETIME DEFAULT CURRENT_TIMESTAMP, '''
         '''    FOREIGN KEY(user_idn) REFERENCES user(user_idn),'''
         '''    FOREIGN KEY(status_idn) REFERENCES code_status(status_idn))'''
     ),

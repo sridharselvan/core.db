@@ -32,7 +32,7 @@ __all__ = [
 Base = declarative_base()
 
 class UserEntity(Base):
-    __tablename__ = 'USER'
+    __tablename__ = 'user'
 
     user_idn = Column(Integer, primary_key=True)
     first_name = Column(String, nullable=False)
@@ -51,7 +51,7 @@ class UserEntity(Base):
     #user_session = relationship('UserSessionEntity')
 
 class CodeStatusEntity(Base):
-    __tablename__ = 'CODE_STATUS'
+    __tablename__ = 'code_status'
 
     status_idn = Column(Integer, primary_key=True)
     status = Column(String, nullable=False)
@@ -59,31 +59,31 @@ class CodeStatusEntity(Base):
     upd_dt = Column(DateTime, default=datetime.datetime.utcnow)
 
 class UserSessionEntity(Base):
-    __tablename__ = 'USER_SESSION'
+    __tablename__ = 'user_session'
 
     user_session_idn = Column(Integer, primary_key=True)
-    user_idn = Column(Integer, ForeignKey('USER.user_idn'))
+    user_idn = Column(Integer, ForeignKey('user.user_idn'))
     client_ip = Column(String, nullable=False)
     browser_name = Column(String, nullable=True)
     browser_version = Column(String, nullable=True)
     attempted_on = Column(DateTime, default=datetime.datetime.utcnow)
-    status_idn = Column(Integer, ForeignKey('CODE_STATUS.status_idn'))
+    status_idn = Column(Integer, ForeignKey('code_status.status_idn'))
     unique_session_cd = Column(String, nullable=True)
     is_active = Column(Integer, nullable=False, default=1)
 
     #user_name = relationship('UserEntity')
 
 class UserActivityEntity(Base):
-    __tablename__ = 'USER_ACTIVITY'
+    __tablename__ = 'user_activity'
 
     user_activity_idn = Column(Integer, primary_key=True)
     is_authorized = Column(Integer, nullable=False)
     crt_dt = Column(DateTime, default=datetime.datetime.utcnow)
-    status_idn = Column(Integer, ForeignKey('CODE_STATUS.status_idn'))
-    user_session_idn = Column(Integer, ForeignKey('USER_SESSION.user_session_idn'))
+    status_idn = Column(Integer, ForeignKey('code_status.status_idn'))
+    user_session_idn = Column(Integer, ForeignKey('user_session.user_session_idn'))
 
 class CodeScheduleTypeEntity(Base):
-    __tablename__ = 'CODE_SCHEDULE_TYPE'
+    __tablename__ = 'code_schedule_type'
 
     schedule_type_idn = Column(Integer, primary_key=True)
     schedule_type = Column(String, nullable=False)
@@ -91,27 +91,27 @@ class CodeScheduleTypeEntity(Base):
     upd_dt = Column(DateTime, default=datetime.datetime.utcnow)
 
 class JobDetailsEntity(Base):
-    __tablename__ = 'JOB_DETAILS'
+    __tablename__ = 'job_details'
 
     job_details_idn = Column(Integer, primary_key=True)
     job_id = Column(String, nullable=False)
-    schedule_type_idn = Column(Integer, ForeignKey('CODE_SCHEDULE_TYPE.schedule_type_idn'))
+    schedule_type_idn = Column(Integer, ForeignKey('code_schedule_type.schedule_type_idn'))
     start_date = Column(DateTime, default=datetime.datetime.utcnow)
     recurrence = Column(String, nullable=True)
     day_of_week = Column(String, nullable=True)
     params = Column(String, nullable=True)
     next_run_time = Column(String, nullable=True)
     is_active = Column(Integer, nullable=False, default=1)
-    user_idn = Column(Integer, ForeignKey('USER.user_idn'))
+    user_idn = Column(Integer, ForeignKey('user.user_idn'))
     crt_dt = Column(DateTime, default=datetime.datetime.utcnow)
     upd_dt = Column(DateTime, default=datetime.datetime.utcnow)
 
 class JobRunLogEntity(Base):
-    __tablename__ = 'JOB_RUN_LOG'
+    __tablename__ = 'job_run_log'
 
     job_run_log_idn = Column(Integer, primary_key=True)
-    job_id = Column(Integer, ForeignKey('JOB_DETAILS.job_id'))
-    status_idn = Column(Integer, ForeignKey('CODE_STATUS.status_idn'))
+    job_id = Column(Integer, ForeignKey('job_details.job_id'))
+    status_idn = Column(Integer, ForeignKey('code_status.status_idn'))
     message = Column(String, nullable=True)
     error_trace = Column(String, nullable=True)
     crt_dt = Column(DateTime, default=datetime.datetime.utcnow)

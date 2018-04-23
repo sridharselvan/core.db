@@ -122,8 +122,8 @@ class JobDetailsModel(SqlAlchemyORM):
         if 'is_active' not in kwargs:
             kwargs['is_active'] = 1
 
-        _s_t = kwargs.pop('schedule_type', 'select one').lower()
-        _schedule_type = ('not in', _s_t) if _s_t == 'select one' else _s_t
+        _s_t = kwargs.pop('schedule_type', 'Select One')
+        _schedule_type = ('not in', _s_t) if _s_t == 'Select One' else _s_t
 
         kwargs['join_tables'].append(
             cls.join_construct(

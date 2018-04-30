@@ -51,6 +51,18 @@ class UserModel(SqlAlchemyORM):
     def create_new_user(cls, session, **kwargs):
         return cls.insert(session, **kwargs)
 
+    @classmethod
+    def update_user_details(cls, session, where_condition=None, updates=None):
+
+        _where = where_condition or dict()
+        _updates = updates or dict()
+
+        return cls.update(
+            session,
+            updates=_updates,
+            where_condition=_where
+        )
+
 class CodeStatusModel(SqlAlchemyORM):
     table = CodeStatusEntity
 

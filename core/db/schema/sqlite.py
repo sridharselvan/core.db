@@ -115,6 +115,10 @@ DataBaseEntity(
     query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('missed',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
     desc='''Data Load for code_status table'''
 )
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_status" ("status","crt_dt","upd_dt") VALUES ('pending',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);''',
+    desc='''Data Load for code_status table'''
+)
 
 
 DataBaseEntity(
@@ -215,6 +219,22 @@ DataBaseEntity(
     ),
     desc='''Create job_run_log table''',
     pre_query='''DROP TABLE IF EXISTS JOB_RUN_LOG'''
+)
+
+
+DataBaseEntity(
+    query=(
+        '''CREATE  TABLE  IF NOT EXISTS "main"."trans_otp" '''
+        '''(trans_otp_idn INTEGER PRIMARY KEY  NOT NULL  UNIQUE , '''
+        '''otp_code INTEGER NOT NULL , '''
+        '''user_idn INTEGER NOT NULL , '''
+        '''status_idn INTEGER NOT NULL ,''' 
+        '''crt_dt DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP, '''
+        '''    FOREIGN KEY(user_idn) REFERENCES user(user_idn),'''
+        '''    FOREIGN KEY(status_idn) REFERENCES code_status(status_idn))'''
+    ),
+    desc='''Create trans_otp table''',
+    pre_query='''DROP TABLE IF EXISTS TRANS_OTP'''
 )
 
 

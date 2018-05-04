@@ -116,3 +116,12 @@ class JobRunLogEntity(Base):
     error_trace = Column(String, nullable=True)
     crt_dt = Column(DateTime, default=datetime.datetime.utcnow)
     upd_dt = Column(DateTime, default=datetime.datetime.utcnow)
+
+class TransOtpEntity(Base):
+    __tablename__ = 'trans_otp'
+
+    trans_otp_idn = Column(Integer, primary_key=True)
+    otp_code = Column(Integer, nullable=False)
+    status_idn = Column(Integer, ForeignKey('code_status.status_idn'))
+    user_idn = Column(Integer, ForeignKey('user.user_idn'))
+    crt_dt = Column(DateTime, default=datetime.datetime.utcnow)

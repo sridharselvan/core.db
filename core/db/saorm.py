@@ -479,4 +479,30 @@ class SqlAlchemyORM(object):
         return query_object.update(updates, synchronize_session='fetch')
 
 
+    @classmethod
+    def delete(cls, session, where_condition):
+        """
+        This method is to delete the database records.
 
+        Args:
+            session (object): SqlAlchemy session object.
+            where_condition (dict): Query filter parameters
+
+        Returns:
+            integer : returns the count of rows that are deleted
+
+        Raises:
+            ``Exception`` when one of the arguments i.e. where_condition are empty
+        """
+        query_object = session.query(cls.table)
+
+        _msg = "'{}' argument can not be empty"
+        if not where_condition:
+            raise Exception(_msg.format('where_condition'))
+
+        filters_list = cls.fetch_filter_conditions(**where_condition)
+
+        for each in filters_list:
+            query_object = query_object.filter(each)
+
+        return query_object.delete()

@@ -20,7 +20,7 @@
 from core.db.saorm import SqlAlchemyORM
 from core.db.entity import (
     UserEntity, UserSessionEntity, CodeStatusEntity, UserActivityEntity,
-    CodeScheduleTypeEntity, JobDetailsEntity, JobRunLogEntity
+    CodeScheduleTypeEntity, JobDetailsEntity, JobRunLogEntity, TransOtpEntity
 )
 # ----------- END: In-App Imports ---------- #
 
@@ -192,4 +192,5 @@ class JobRunLogModel(SqlAlchemyORM):
     def create_run_log(cls, session, **kwargs):
         return cls.insert(session, **kwargs)
 
-
+class TransOtpModel(SqlAlchemyORM):
+    table = TransOtpEntity

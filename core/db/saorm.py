@@ -240,7 +240,6 @@ class SqlAlchemyORM(object):
         # added to it.
         _join_tables = kwargs.pop('join_tables', list())
 
-        order_by = kwargs.pop('order_clause', list())
         #
         # Add the join in sequence
         for named_join_tuple in _join_tables:
@@ -264,10 +263,6 @@ class SqlAlchemyORM(object):
         # Apply the collected ``_filters``.
         for each_filter in _filters:
             query_object = query_object.filter(each_filter)
-
-        # order by clause
-        for each in order_by:
-            query_object = query_object.order_by(each)
 
         #
         # Apply the select column restrictions
@@ -315,7 +310,7 @@ class SqlAlchemyORM(object):
         return query_object
 
     @classmethod
-    def fetch(cls, session, select_cols='*', mode='all', data_as_dict=False, **kwargs):
+    def fetch(cls, session, select_cols='*', mode='all', data_as_dict=False, order_by=None, **kwargs):
 
         """Fetches the Recordset(s) of current Table or joined tables for the
         given filters and specified columns.
@@ -325,6 +320,7 @@ class SqlAlchemyORM(object):
             select_cols (Optional[list]): select column restrictions
             mode (Optional): Query mode e.g., one, all, etc.,
             data_as_dict (Optional[bool]): Flag which determines the format in which result is returned
+            order_by (Optional): field on which the result to be sorted
             \*\*kwargs (keyword Argggument): An arbitrary keyword argument.
 
         Returns:
@@ -335,6 +331,19 @@ class SqlAlchemyORM(object):
         query_object = session.query(cls.table)
 
         query_object = cls.prepare_query(query_object, select_cols=select_cols, **kwargs)
+
+        if order_by:
+
+            if not isinstance(order_by, (list, tuple)):
+                order_by = [order_by, 'ascending']
+
+            order_by_field, sort_order = order_by
+
+            if sort_order in ('desc', 'descending', ):
+                query_object = query_object.order_by(order_by_field.desc())
+
+            else:
+                query_object = query_object.order_by(order_by_field.asc())
 
         q_obj = getattr(query_object, cls.mode_map[mode], query_object.all)
 
@@ -369,7 +378,11 @@ class SqlAlchemyORM(object):
         """
         try:
             result = cls.fetch(
-                session, select_cols=select_cols, mode='one', data_as_dict=data_as_dict, **kwargs
+                session,
+                select_cols=select_cols,
+                mode='one',
+                data_as_dict=data_as_dict,
+                **kwargs
             )
         except (NoResultFound, MultipleResultsFound):
             #
@@ -415,7 +428,7 @@ class SqlAlchemyORM(object):
                 value = int(value)
 
             if isinstance(value, datetime):
-                value = value.strftime('%Y-%m-%d %H:%M:%S')            
+                value = value.strftime('%Y-%m-%d %H:%M:%S')
             return value
 
         def _adjust(f_name):

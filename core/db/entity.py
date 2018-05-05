@@ -125,3 +125,11 @@ class TransOtpEntity(Base):
     status_idn = Column(Integer, ForeignKey('code_status.status_idn'))
     user_idn = Column(Integer, ForeignKey('user.user_idn'))
     crt_dt = Column(DateTime, default=datetime.datetime.utcnow)
+
+class TransSmsEntity(Base):
+    __tablename__ = 'trans_sms'
+
+    trans_sms_idn = Column(Integer, primary_key=True)
+    message = Column(String, nullable=False)
+    user_idn = Column(Integer, ForeignKey('user.user_idn'))
+    crt_dt = Column(DateTime, default=datetime.datetime.utcnow)

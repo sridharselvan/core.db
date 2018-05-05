@@ -237,5 +237,18 @@ DataBaseEntity(
     pre_query='''DROP TABLE IF EXISTS TRANS_OTP'''
 )
 
+DataBaseEntity(
+    query=(
+        '''CREATE  TABLE  IF NOT EXISTS "main"."trans_sms" '''
+        '''(trans_sms_idn INTEGER PRIMARY KEY  NOT NULL  UNIQUE , '''
+        '''message VARCHAR , '''
+        '''user_idn INTEGER NOT NULL , ''' 
+        '''crt_dt DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP, '''
+        '''    FOREIGN KEY(user_idn) REFERENCES user(user_idn))'''
+    ),
+    desc='''Create trans_sms table''',
+    pre_query='''DROP TABLE IF EXISTS TRANS_SMS'''
+)
+
 
 

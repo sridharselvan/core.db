@@ -198,3 +198,30 @@ class TransOtpModel(SqlAlchemyORM):
 
 class TransSmsModel(SqlAlchemyORM):
     table = TransSmsEntity
+
+    @classmethod
+    def fetch_failed_sms(cls, session, mode='all', select_cols="*", data_as_dict=False, **kwargs):
+
+        kwargs.update({'join_tables':list()})
+
+        kwargs['join_tables'].append(
+            cls.join_construct(
+                table_model=UserModel,
+                join_on='default'
+            )
+        )
+
+        columns = cls.table.__table__.columns.keys()
+
+        select_cols = [getattr(cls.table, column_name) for column_name in columns] + [
+           UserModel.table.user_name
+        ]
+
+        return super(cls, cls).fetch(
+            session,
+            mode=mode,
+            select_cols=select_cols,
+            data_as_dict=data_as_dict,
+            order_by=(TransSmsModel.table.trans_sms_idn, 'desc'),
+            **kwargs
+        )

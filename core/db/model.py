@@ -21,7 +21,7 @@ from core.db.saorm import SqlAlchemyORM
 from core.db.entity import (
     UserEntity, UserSessionEntity, CodeStatusEntity, UserActivityEntity,
     CodeScheduleTypeEntity, JobDetailsEntity, JobRunLogEntity, TransOtpEntity,
-    TransSmsEntity
+    TransSmsEntity, CodeEventsEntity, CodeSmsEventsEntity, ConfigUserSmsEntity
 )
 # ----------- END: In-App Imports ---------- #
 
@@ -225,3 +225,12 @@ class TransSmsModel(SqlAlchemyORM):
             order_by=(TransSmsModel.table.trans_sms_idn, 'desc'),
             **kwargs
         )
+
+class CodeEventsModel(SqlAlchemyORM):
+    table = CodeEventsEntity
+
+class CodeSmsEventsModel(SqlAlchemyORM):
+    table = CodeSmsEventsEntity
+
+class ConfigUserSmsModel(SqlAlchemyORM):
+    table = ConfigUserSmsEntity

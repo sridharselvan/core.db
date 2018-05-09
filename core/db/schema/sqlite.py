@@ -261,6 +261,21 @@ DataBaseEntity(
 )
 
 DataBaseEntity(
+    query='''INSERT INTO "main"."code_events" ("event_name") VALUES ('schedule initiated');''',
+    desc='''Data Load for code_events table'''
+)
+
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_events" ("event_name") VALUES ('schedule errored');''',
+    desc='''Data Load for code_events table'''
+)
+
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_events" ("event_name") VALUES ('schedule missed');''',
+    desc='''Data Load for code_events table'''
+)
+
+DataBaseEntity(
     query=(
         '''CREATE  TABLE  IF NOT EXISTS "main"."code_sms_events" '''
         '''(code_sms_events_idn INTEGER PRIMARY KEY  NOT NULL  UNIQUE , '''
@@ -270,6 +285,24 @@ DataBaseEntity(
     ),
     desc='''Create code_sms_events table''',
     pre_query='''DROP TABLE IF EXISTS CODE_SMS_EVENTS'''
+)
+
+# For Schedule Initiated in code events table
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_sms_events" ("code_events_idn") VALUES (1);''',
+    desc='''Data Load for code_sms_events table'''
+)
+
+# For Schedule Errored in code events table
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_sms_events" ("code_events_idn") VALUES (2);''',
+    desc='''Data Load for code_sms_events table'''
+)
+
+# For Schedule Missed in code events table
+DataBaseEntity(
+    query='''INSERT INTO "main"."code_sms_events" ("code_events_idn") VALUES (3);''',
+    desc='''Data Load for code_sms_events table'''
 )
 
 

@@ -226,26 +226,24 @@ class TransSmsModel(SqlAlchemyORM):
             **kwargs
         )
 
+
 class CodeEventsModel(SqlAlchemyORM):
     table = CodeEventsEntity
+
 
 class CodeSmsEventsModel(SqlAlchemyORM):
     table = CodeSmsEventsEntity
 
+
 class ConfigUserSmsModel(SqlAlchemyORM):
     table = ConfigUserSmsEntity
 
-    def get_active_sms_events(cls, session, sms_events, user_idn, select_cols="*", data_as_dict=False, **kwargs):
+    @classmethod
+    def is_sms_notif_opted(cls, session, **kwargs):
 
         kwargs.update({'join_tables':list()})
 
-        kwargs['join_tables'].append(
-            cls.join_construct(
-                table_model=CodeEventsModel,
-                join_on='default',
-                where_condition={'event_name': sms_events}
-            )
-        )
+        kwargs['is_active'] = 1
 
         kwargs['join_tables'].append(
             cls.join_construct(
@@ -255,16 +253,12 @@ class ConfigUserSmsModel(SqlAlchemyORM):
             )
         )
 
-        columns = cls.table.__table__.columns.keys()
-
-        select_cols = [getattr(cls.table, column_name) for column_name in columns] + [
-           ConfigUserSmsModel.table.is_active
-        ]
-
-        return super(cls, cls).fetch(
-            session,
-            mode=mode,
-            select_cols=select_cols,
-            data_as_dict=data_as_dict,
-            **kwargs
+        kwargs['join_tables'].append(
+            cls.join_construct(
+                table_model=CodeEventsModel,
+                join_on='default',
+                where_condition={'event_name': kwargs.pop('sms_event')}
+            )
         )
+
+        return super(cls, cls).fetch_one(session, **kwargs)

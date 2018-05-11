@@ -234,3 +234,37 @@ class CodeSmsEventsModel(SqlAlchemyORM):
 
 class ConfigUserSmsModel(SqlAlchemyORM):
     table = ConfigUserSmsEntity
+
+    def get_active_sms_events(cls, session, sms_events, user_idn, select_cols="*", data_as_dict=False, **kwargs):
+
+        kwargs.update({'join_tables':list()})
+
+        kwargs['join_tables'].append(
+            cls.join_construct(
+                table_model=CodeEventsModel,
+                join_on='default',
+                where_condition={'event_name': sms_events}
+            )
+        )
+
+        kwargs['join_tables'].append(
+            cls.join_construct(
+                table_model=CodeSmsEventsModel,
+                join_on='default',
+                where_condition={'is_active': 1}
+            )
+        )
+
+        columns = cls.table.__table__.columns.keys()
+
+        select_cols = [getattr(cls.table, column_name) for column_name in columns] + [
+           ConfigUserSmsModel.table.is_active
+        ]
+
+        return super(cls, cls).fetch(
+            session,
+            mode=mode,
+            select_cols=select_cols,
+            data_as_dict=data_as_dict,
+            **kwargs
+        )

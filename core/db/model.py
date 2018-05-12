@@ -164,7 +164,6 @@ class JobDetailsModel(SqlAlchemyORM):
             session, mode=mode, select_cols=select_cols, data_as_dict=data_as_dict, **kwargs
         )
 
-
     @classmethod
     def deactivate_jobs(cls, session, **kwargs):
 
@@ -173,6 +172,13 @@ class JobDetailsModel(SqlAlchemyORM):
             updates={'is_active': 0},
             where_condition=kwargs
         )
+
+    @classmethod
+    def deactivate_job_if_onetime(cls, session, **kwargs):
+
+        kwargs['schedule_type_idn'] = CodeScheduleTypeModel.fetch_one(session, schedule_type='OneTime').schedule_type_idn
+
+        return cls.deactivate_jobs(session, **kwargs)
 
     @classmethod
     def update_jobs(cls, session, where_condition=None, updates=None):

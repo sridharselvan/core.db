@@ -164,7 +164,7 @@ class JobDetailsModel(SqlAlchemyORM):
             session, mode=mode,
             select_cols=select_cols,
             data_as_dict=data_as_dict,
-            order_by=(JobDetailsModel.table.start_date, 'desc'),
+            order_by=(JobDetailsModel.table.job_details_idn, 'desc'),
             **kwargs
         )
 

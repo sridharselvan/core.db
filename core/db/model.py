@@ -268,3 +268,35 @@ class ConfigUserSmsModel(SqlAlchemyORM):
         )
 
         return super(cls, cls).fetch_one(session, **kwargs)
+
+    @classmethod
+    def fetch_sms_config(cls, session, mode='all', select_cols="*", data_as_dict=True, **kwargs):
+
+        kwargs.update({'join_tables':list()})
+
+        kwargs['join_tables'].append(
+            cls.join_construct(
+                table_model=CodeSmsEventsModel,
+                join_on='default'
+            )
+        )
+
+        kwargs['join_tables'].append(
+            cls.join_construct(
+                table_model=CodeEventsModel,
+                join_on='default'
+            )
+        )
+
+        if select_cols == '*':
+            native_columns = [
+                getattr(cls.table, column_name) for column_name in cls.table.__table__.columns.keys()
+            ]
+        else:
+            native_columns = select_cols
+
+        select_cols = native_columns + [CodeEventsModel.table.event_name]
+
+        return super(cls, cls).fetch(
+            session, mode=mode, select_cols=select_cols, data_as_dict=data_as_dict, **kwargs
+        )
